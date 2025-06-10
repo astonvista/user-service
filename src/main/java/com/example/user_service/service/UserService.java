@@ -4,7 +4,7 @@ import com.example.user_service.dto.UserDto;
 import com.example.user_service.entity.User;
 import com.example.user_service.mapper.UserMapper;
 import com.example.user_service.repository.UserRepository;
-import exception.UserNotFoundException;
+import com.example.user_service.exception.UserNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
