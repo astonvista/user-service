@@ -2,37 +2,40 @@ package com.example.user_service.controller;
 
 import com.example.user_service.dto.UserDto;
 import com.example.user_service.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Validated
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService service;
 
     @GetMapping
-    public List<UserDto> getAll() {
-        return service.getAll();
+    public ResponseEntity<List<UserDto>> getAll() {
+        return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public UserDto getById(@PathVariable Long id) {
-        return service.getById(id);
+    public ResponseEntity<UserDto> getById(@PathVariable Long id) {
+        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> create(@RequestBody UserDto dto) {
+    public ResponseEntity<UserDto> create(@RequestBody @Valid UserDto dto) {
         return new ResponseEntity<>(service.create(dto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public UserDto update(@PathVariable Long id, @RequestBody UserDto dto) {
-        return service.update(id, dto);
+    public ResponseEntity<UserDto> update(@PathVariable Long id, @RequestBody @Valid UserDto dto) {
+        return new ResponseEntity<>(service.update(id, dto), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -40,11 +43,4 @@ public class UserController {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
-
-//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//    @ExceptionHandler(UserNotFoundException.class)
-//    public Map<String, String> handleValidationExceptions(UserNotFoundException e) {
-//        Map<String, String> errors = new HashMap<>();
-//
-//    }
 }

@@ -14,9 +14,11 @@ public class UserDto {
 
     private Long id;
 
-    @NotBlank(message = "Поле \"Имя\" не может быть пустым")
+    @NotBlank(message = "Имя не может быть пустым")
+    @Pattern(regexp = "^\\D*$", message = "Имя не может содержать цифры")
     private String name;
 
+    @NotBlank(message = "E-mail не может быть пустым")
     @Email(message = "Введите корректный e-mail")
     private String email;
 
