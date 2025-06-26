@@ -2,6 +2,7 @@ package com.example.user_service.controller;
 
 import com.example.user_service.dto.UserDto;
 import com.example.user_service.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> create(@RequestBody @Valid UserDto dto) {
+    public ResponseEntity<UserDto> create(@RequestBody @Valid UserDto dto) throws JsonProcessingException {
         return new ResponseEntity<>(service.create(dto), HttpStatus.CREATED);
     }
 
@@ -39,7 +40,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws JsonProcessingException {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

@@ -5,6 +5,7 @@ import com.example.user_service.entity.User;
 import com.example.user_service.exception.UserNotFoundException;
 import com.example.user_service.mapper.UserMapper;
 import com.example.user_service.repository.UserRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.persistence.EntityExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,14 @@ import java.util.List;
 public class UserService {
     private final UserMapper mapper;
     private final UserRepository userRepository;
+    private final KafkaProducerService kafkaProducerService;
 
-    public UserDto create(UserDto userDto) {
-        User user = mapper.toEntity(userDto);
-        return mapper.toDto(userRepository.save(user));
+    public UserDto create(UserDto userDto) throws JsonProcessingException {
+        User savedUser;
+
+        savedUser = userRepository.save(mapper.toEntity(userDto));
+        kafkaProducerService.sendUserEvent("create", savedUser.getEmail());
+        return mapper.toDto(savedUser);
     }
 
     public UserDto getById(Long id) {
@@ -44,8 +49,10 @@ public class UserService {
         return mapper.toDto(userRepository.save(user));
     }
 
-    public void delete(Long id) {
+    public void delete(Long id) throws JsonProcessingException {
+        String email = getById(id).getEmail();
         userRepository.deleteById(id);
+        kafkaProducerService.sendUserEvent("delete", email);
     }
 
     public List<UserDto> getAll() {

@@ -1,12 +1,13 @@
-## Настройка PostgreSQL в Docker
-Приложение настроено на подключение к PostgreSQL по следующим параметрам:
+# user-service
+## Инструкция по запуску
+### Создание контейнера PostgreSQL в Docker
+После запуска Docker, запустите в терминале:
 ```
-spring.datasource.url=jdbc:postgresql://localhost:5432/testdb
-spring.datasource.username=postgres
-spring.datasource.password=astondb
+docker-compose up -d
 ```
-## Отправка запросов через Postman
-### Путь до эндпоинта:
+PostgreSQL будет доступен на localhost:5432.
+### Отправка запросов через Postman
+#### Путь до эндпоинта:
 ````
 http://localhost:8080/api/users
 ````

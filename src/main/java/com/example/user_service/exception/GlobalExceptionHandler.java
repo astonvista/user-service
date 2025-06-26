@@ -1,5 +1,6 @@
 package com.example.user_service.exception;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,12 @@ public class GlobalExceptionHandler {
         log.warn("Введенный e-mail уже существует");
         return new ResponseEntity<>(Map.of("Введенный e-mail уже существует: ", e.getMessage()),
                 HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(JsonProcessingException.class)
+    public ResponseEntity<Map<String, String>> handleJsonProcessing(JsonProcessingException e) {
+        log.error("Ошибка сериализации JSON");
+        return new ResponseEntity<>(Map.of("error: ", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(Exception.class)
