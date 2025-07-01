@@ -18,7 +18,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleUserNotFound(UserNotFoundException e) {
-        log.info("пользователь не найден");
+        log.info("Пользователь с таким ID не найден");
         return new ResponseEntity<>(Map.of(e.getField(), e.getMessage()), HttpStatus.NOT_FOUND);
     }
 
@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, String>> handleDataIntegrityViolation(DataIntegrityViolationException e) {
         log.warn("Введенный e-mail уже существует");
         return new ResponseEntity<>(Map.of("Введенный e-mail уже существует: ", e.getMessage()),
-                HttpStatus.INTERNAL_SERVER_ERROR);
+                HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(JsonProcessingException.class)
@@ -47,6 +47,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleAll(Exception e) {
         log.error("Неизвестная ошибка");
-        return new ResponseEntity<>(Map.of("error: ", e.getMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(Map.of("error: ", e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

@@ -6,52 +6,9 @@
 docker-compose up -d
 ```
 PostgreSQL будет доступен на localhost:5432.
-### Отправка запросов через Postman
-#### Путь до эндпоинта:
-````
-http://localhost:8080/api/users
-````
-
-### Получить всех пользователей
-**GET** `/api/users`
-
-#### Пример запроса
-GET http://localhost:8080/api/users
-
-### Получить пользователя по ID
-**GET** `/api/users/{id}`
-
-#### Пример запроса
-GET http://localhost:8080/api/users/1
-
-### Создать пользователя
-**POST** `/api/users`
-
-#### Пример запроса
-POST http://localhost:8080/api/users
-
-#### Тело запроса
-````
-{
-  "name": "Тест",
-  "email": "test@example.com"
-}
-````
-### Обновить пользователя
-**PUT** `/api/users/{id}`
-
-#### Пример запроса
-PUT http://localhost:8080/api/users/1
-
-#### Тело запроса
-````
-{
-  "name": "Тест",
-  "email": "test@example.com"
-}
-````
-### Удалить пользователя
-**DELETE** `/api/users/{id}`
-
-#### Пример запроса
-DELETE http://localhost:8080/api/users/1
+### Для корректной работы необходим запущенный notification-service.
+## Инструкция по работе с запросами
+Реализована поддержка Swagger. Все запросы выполняются посредством Swagger UI, доступного по адресу:
+```
+http://localhost:8080/swagger-ui/index.html
+```

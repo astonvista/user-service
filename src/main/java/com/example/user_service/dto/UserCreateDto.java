@@ -2,24 +2,15 @@ package com.example.user_service.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
-import lombok.*;
-
-import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(description = "Пользователь")
-public class UserDto {
-
-    public UserDto(String name, String email, int age) {
-        this.name = name;
-        this.email = email;
-        this.age = age;
-    }
-
-    @Schema(description = "ID пользователя", example = "1")
-    private Long id;
+public class UserCreateDto {
 
     @NotBlank(message = "Имя не может быть пустым")
     @Pattern(regexp = "^\\D*$", message = "Имя не может содержать цифры")
@@ -36,7 +27,4 @@ public class UserDto {
     @Max(value = 100, message = "Возраст не может быть больше 100 лет")
     @Schema(description = "Возраст пользователя", example = "18")
     private int age;
-
-    @Schema(description = "Дата и время создания пользователя")
-    private LocalDateTime createdAt;
 }
