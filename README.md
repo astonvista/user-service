@@ -6,7 +6,8 @@
 docker-compose up -d
 ```
 PostgreSQL будет доступен на localhost:5432.
-### Отправка запросов через Postman
+### Для корректной работы необходим запущенный notification-service.
+## Отправка запросов через Postman
 #### Путь до эндпоинта:
 ````
 http://localhost:8080/api/users
@@ -34,7 +35,8 @@ POST http://localhost:8080/api/users
 ````
 {
   "name": "Тест",
-  "email": "test@example.com"
+  "email": "test@example.com",
+  "age": 18
 }
 ````
 ### Обновить пользователя
@@ -47,7 +49,8 @@ PUT http://localhost:8080/api/users/1
 ````
 {
   "name": "Тест",
-  "email": "test@example.com"
+  "email": "test@example.com",
+  "age": 18
 }
 ````
 ### Удалить пользователя
